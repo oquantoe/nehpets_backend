@@ -3,11 +3,7 @@ const bodyParser = require('body-parser');
 const { createServer } = require("http");
 const { check, oneOf, validationResult } = require('express-validator');
 const inlineCSS = require('inline-css');
-
-const API_KEY = '51cff3b7a19525059f3bdecce9a1cbf7-c9746cf8-4b2d03d7';
-const DOMAIN = 'https://api.mailgun.net/v3/sandbox1a4549f092224697ab968749f4987b8a.mailgun.org';
-
-const mailgun = require('mailgun-js')({ apiKey: API_KEY, domain: DOMAIN });
+const nodemailer = require("nodemailer");
 
 
 const app = express();
@@ -22,31 +18,28 @@ app.route("/").get((req, res) => {
 const sendMail = (sender_email, receiver_email,
   email_subject, email_body, req, res, next) => {
 
-  // const data = {
-  //   "from": sender_email,
-  //   "to": receiver_email,
-  //   "subject": email_subject,
-  //   "text": email_body
-  // };
-
-  // mailgun.messages().send(data, (error, body) => {
-  //   if (error) console.log(error)
-  //   else console.log(body);
-  // });
-
-  run().catch(err => console.log(err));
-
-  async function run() {
-    const html = await inlineCSS(email_body, { url: ' ' });
-
-    await mailgun.messages().send({
-      from: sender_email,
-      to: receiver_email,
+  async function main() {
+    // SMTP config
+    const transporter = nodemailer.createTransport({
+      host: 'mail.buynigeriaonline.com',
+      port: 465,
+      auth: {
+        user: 'nehpets@buynigeriaonline.com',
+        pass: 'Domi@2020'
+      }
+    }); // Send the email
+    let info = await transporter.sendMail({
+      from: `"Web Form" <${sender_email}>`,
+      to: receiver_email, // Test email address
       subject: email_subject,
-      html,
-      text: 'Hello, Nehpets'
+      text: "Email body in plain text",
+      html: email_body,
     });
+    console.log("Message sent: %s", info.messageId); // Output message ID
+    console.log("View email: %s", nodemailer.getTestMessageUrl(info)); // URL to preview email
   }
+  // Catch any errors and output them to the console
+  main().catch(console.error);
 }
 
 app.post('/form', oneOf([
@@ -79,7 +72,7 @@ app.post('/form', oneOf([
       terms
     } = req.body;
 
-    const receiver_email = 'danielufeli@gmail.com'
+    const receiver_email = 'nickacad26@gmail.com'
     const email_subject = 'Sent from Nehpets Enquiry Form';
 
     const email_body = `<div>
