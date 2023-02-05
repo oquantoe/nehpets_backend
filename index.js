@@ -22,16 +22,15 @@ const sendMail = (sender_email, receiver_email,
   async function main() {
     // SMTP config
     const transporter = nodemailer.createTransport({
-      host: 'mail.buynigeriaonline.com',
-      port: 465,
-      secure: true,
+      host: 'smtp.sendgrid.net',
+      port: 587,
       auth: {
-        user: 'nehpets@buynigeriaonline.com',
-        pass: 'Domi@2020'
+        user: 'apikey',
+        pass: process.env.API_KEY,
       }
     }); // Send the email
     let info = await transporter.sendMail({
-      from: `"Web Form" <${sender_email}>`,
+      from: `"Enquiry Form Nehpets" <nehpets@buynigeriaonline.com>`,
       to: receiver_email, // Test email address
       subject: email_subject,
       text: "Email body in plain text",
