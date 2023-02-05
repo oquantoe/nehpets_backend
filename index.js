@@ -74,7 +74,7 @@ app.post('/form', oneOf([
       terms
     } = req.body;
 
-    const receiver_email = 'danielufeli@gmail.com'
+    const receiver_email = 'nickacad26@gmail.com'
     const email_subject = 'Sent from Nehpets Enquiry Form';
 
     const email_body = `<div>
