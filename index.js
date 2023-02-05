@@ -4,11 +4,12 @@ const { createServer } = require("http");
 const { check, oneOf, validationResult } = require('express-validator');
 const inlineCSS = require('inline-css');
 const nodemailer = require("nodemailer");
-
+const cors = require('cors')
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 const httpServer = createServer(app);
 
 app.route("/").get((req, res) => {
@@ -23,6 +24,7 @@ const sendMail = (sender_email, receiver_email,
     const transporter = nodemailer.createTransport({
       host: 'mail.buynigeriaonline.com',
       port: 465,
+      secure: true,
       auth: {
         user: 'nehpets@buynigeriaonline.com',
         pass: 'Domi@2020'
@@ -72,7 +74,7 @@ app.post('/form', oneOf([
       terms
     } = req.body;
 
-    const receiver_email = 'nickacad26@gmail.com'
+    const receiver_email = 'danielufeli@gmail.com'
     const email_subject = 'Sent from Nehpets Enquiry Form';
 
     const email_body = `<div>
