@@ -110,5 +110,66 @@ app.post('/form', oneOf([
   }
 });
 
+app.post('/book', oneOf([
+  [
+    check('firstName').exists(),
+    check('lastName').exists(),
+    check('phoneNumber').exists(),
+    check('email').exists(),
+  ]
+]), (req, res, next) => {
+  try {
+    validationResult(req).throw();
+
+    const {
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      address,
+      purpose,
+      ieltsReg,
+      ieltsExamDate,
+      tutorial,
+      studyMaterials,
+      consultation,
+      examinationLocation,
+    } = req.body;
+
+    const receiver_email = 'nickacad26@gmail.com'
+    const email_subject = 'Sent from Nehpets Booking Form';
+
+    const email_body = `<div>
+      <style>
+        h1 {color: green; }
+      </style>
+
+      <h1>Hello, Admin Find Below Details of the Booking Form Submitted on Nehpets Site</h1>
+      <p>First Name: ${firstName}</p>
+      <p>Last Name: ${lastName}</p>
+      <p>Phone Number: ${phoneNumber}</p>
+      <p>Email: ${email}</p>
+      <p>Address: ${address}</p>
+      <p>Purpose: ${purpose}</p>
+      <p>Ielts Registration: ${ieltsReg}</p>
+      <p>Ielts Exam Date: ${ieltsExamDate}</p>
+      <p>Tutorial: ${tutorial}</p>
+      <p>Study Materials: ${studyMaterials}</p>
+      <p>Consultation: ${consultation}</p>
+      <p>Examination Location: ${examinationLocation}</p>
+    </div>`;
+
+    sendMail(email, receiver_email, email_subject, email_body);
+
+    return res.status(200).json({
+      message: 'Email sent successfully',
+      data: req.body
+    });
+
+  } catch (err) {
+    return res.status(400).json({ errors: err.array() });
+  }
+});
+
 
 httpServer.listen(3000);
