@@ -73,7 +73,7 @@ app.post('/form', oneOf([
       terms
     } = req.body;
 
-    const receiver_email = 'nickacad26@gmail.com'
+    const receiver_email = 'nickacad26@gmail.com, sahodu06@gmail.com'
     const email_subject = 'Sent from Nehpets Enquiry Form';
 
     const email_body = `<div>
@@ -136,7 +136,7 @@ app.post('/book', oneOf([
       examinationLocation,
     } = req.body;
 
-    const receiver_email = 'nickacad26@gmail.com'
+    const receiver_email = 'nickacad26@gmail.com, sahodu06@gmail.com'
     const email_subject = 'Sent from Nehpets Booking Form';
 
     const email_body = `<div>
