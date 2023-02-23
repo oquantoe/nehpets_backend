@@ -124,16 +124,27 @@ app.post('/book', oneOf([
     const {
       firstName,
       lastName,
+      age,
       phoneNumber,
-      email,
-      address,
-      purpose,
-      ieltsReg,
-      ieltsExamDate,
-      tutorial,
-      studyMaterials,
-      consultation,
-      examinationLocation,
+      mailingAddress,
+      country,
+      nationality,
+      highestLevelEducation,
+      immigratingToCanada,
+      maritalStatus,
+      children,
+      howManyMembersHouseHold,
+      primaryReason,
+      currentOccupation,
+      transcriptsEvaluated,
+      canadianOfficialLanguage,
+      firstLanguage,
+      relativesOrFriendsLivingInCanada,
+      amountOfSettlementFunds,
+      writtenIELTS,
+      ieltsMonthYear,
+      provinceMigrating,
+      aboutNephetsConsults,
     } = req.body;
 
     const receiver_email = 'nickacad26@gmail.com, sahodu06@gmail.com'
@@ -148,15 +159,26 @@ app.post('/book', oneOf([
       <p>First Name: ${firstName}</p>
       <p>Last Name: ${lastName}</p>
       <p>Phone Number: ${phoneNumber}</p>
-      <p>Email: ${email}</p>
-      <p>Address: ${address}</p>
-      <p>Purpose: ${purpose}</p>
-      <p>Ielts Registration: ${ieltsReg}</p>
-      <p>Ielts Exam Date: ${ieltsExamDate}</p>
-      <p>Tutorial: ${tutorial}</p>
-      <p>Study Materials: ${studyMaterials}</p>
-      <p>Consultation: ${consultation}</p>
-      <p>Examination Location: ${examinationLocation}</p>
+      <p>Age: ${age}</p>
+      <p>Current Mailing Address: ${mailingAddress}</p>
+      <p>Nationality(Country of Birth): ${nationality}</p>
+      <p>Country of Residence: ${country}</p>
+      <p>Highest Level of Education for you and your partner: ${highestLevelEducation}</p>
+      <p>How soon are you Immigrating to Canada: ${immigratingToCanada}</p>
+      <p>Marital Status: ${maritalStatus}</p>
+      <p>Do you have any dependent Children: ${children}</p>
+      <p>How many members of your household plan to immigrate with you: ${howManyMembersHouseHold}</p>
+      <p>What is the Primary Reason for immigrating to canada: ${primaryReason}</p>
+      <p>Current Occupation: ${currentOccupation}</p>
+      <p>Have you had you Transcripts Evaluated by Canada evalucation service: ${transcriptsEvaluated}</p>
+      <p>Which Canadian Official Language do you speak: ${canadianOfficialLanguage}</p>
+      <p>What is your First Language Spoken Fluently: ${firstLanguage}</p>
+      <p>Do you have Relatives or Friends Living in Canada: ${relativesOrFriendsLivingInCanada}</p>
+      <p>Amount of Settlement Funds Available: ${amountOfSettlementFunds}</p>
+      <p>Have you Written IELTS Exam: ${writtenIELTS}</p>
+      <p>IELTS Month and Year: ${ieltsMonthYear}</p>
+      <p>What Province are you interested in Migrating to: ${provinceMigrating}</p>
+      <p>How did you hear about Nephets Consults: ${aboutNephetsConsults}</p>
     </div>`;
 
     sendMail(email, receiver_email, email_subject, email_body);
