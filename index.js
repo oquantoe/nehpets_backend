@@ -47,10 +47,10 @@ app.post('/form', oneOf([
   [
     check('firstName').exists(),
     check('lastName').exists(),
-    check('mobileNumber').exists(),
     check('age').exists(),
-    check('maritalStatus').exists(),
-    check('email').exists(),
+    check('phoneNumber').exists(),
+    check('mailingAddress').exists(),
+    check('country').exists(),
   ]
 ]), (req, res, next) => {
   try {
