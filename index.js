@@ -6,10 +6,23 @@ const inlineCSS = require('inline-css');
 const nodemailer = require("nodemailer");
 const cors = require('cors')
 
+const corsOpts = {
+  origin: '*',
+
+  methods: [
+    'GET',
+    'POST',
+  ],
+
+  allowedHeaders: [
+    'Content-Type',
+  ],
+};
+
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors(corsOpts));
 const httpServer = createServer(app);
 
 app.route("/").get((req, res) => {
