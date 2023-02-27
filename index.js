@@ -51,6 +51,7 @@ app.post('/form', oneOf([
     check('phoneNumber').exists(),
     check('mailingAddress').exists(),
     check('country').exists(),
+    check('email').exists(),
   ]
 ]), (req, res, next) => {
   try {
@@ -81,6 +82,7 @@ app.post('/form', oneOf([
       ieltsMonthYear,
       provinceMigrating,
       aboutNephetsConsults,
+      email,
     } = req.body;
 
     const receiver_email = 'nickacad26@gmail.com, sahodu06@gmail.com'
@@ -95,6 +97,7 @@ app.post('/form', oneOf([
       <p>First Name: ${firstName}</p>
       <p>Last Name: ${lastName}</p>
       <p>Phone Number: ${phoneNumber}</p>
+      <p>Email: ${email}</p>
       <p>Age: ${age}</p>
       <p>Current Mailing Address: ${mailingAddress}</p>
       <p>Nationality(Country of Birth): ${nationality}</p>
@@ -125,6 +128,7 @@ app.post('/form', oneOf([
     });
 
   } catch (err) {
+    console.log(err)
     return res.status(400).json({ errors: err.array() });
   }
 });
