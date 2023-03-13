@@ -2,9 +2,10 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const { createServer } = require("http");
 const { check, oneOf, validationResult } = require('express-validator');
+const Paystack = require('paystack')('sk_test_5001f1f18257a2b086d9b96a32acecb0a4e93356');
 const inlineCSS = require('inline-css');
 const nodemailer = require("nodemailer");
-const cors = require('cors')
+const cors = require('cors');
 
 const corsOpts = {
   origin: '*',
@@ -201,6 +202,71 @@ app.post('/book', oneOf([
       message: 'Email sent successfully',
       data: req.body
     });
+
+  } catch (err) {
+    return res.status(400).json({ errors: err.array() });
+  }
+});
+
+app.post('/pay', oneOf([
+  [
+    check('amount').exists(),
+    check('email').exists(),
+  ]
+]), (req, res, next) => {
+  try {
+    validationResult(req).throw();
+
+    const {
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      amount
+    } = req.body;
+
+    Paystack.transaction.initialize({
+      email: email,
+      amount: parseInt(amount) * 100 // in kobo
+    }).then(function(body){
+      // send the authorization_url in the response to the client to redirect them to
+      // the payment page where they can make the payment
+      // res.redirect(body.data.authorization_url);
+      res.status(200).json({
+        success: true,
+        url: body.data.authorization_url
+      });
+    });
+
+    // const receiver_email = 'nickacad26@gmail.com, sahodu06@gmail.com'
+    // const email_subject = 'Sent from Nehpets Booking Form';
+
+    // const email_body = `<div>
+    //   <style>
+    //     h1 {color: green; }
+    //   </style>
+
+    //   <h1>Hello, Admin Find Below Details of the Booking Form Submitted on Nehpets Site</h1>
+    //   <p>First Name: ${firstName}</p>
+    //   <p>Last Name: ${lastName}</p>
+    //   <p>Phone Number: ${phoneNumber}</p>
+    //   <p>Email: ${email}</p>
+    //   <p>Address: ${address}</p>
+    //   <p>Purpose: ${purpose}</p>
+    //   <p>Ielts Registration: ${ieltsReg}</p>
+    //   <p>Ielts Exam Date: ${ieltsExamDate}</p>
+    //   <p>Tutorial: ${tutorial}</p>
+    //   <p>Study Materials: ${studyMaterials}</p>
+    //   <p>Consultation: ${consultation}</p>
+    //   <p>Examination Location: ${examinationLocation}</p>
+    // </div>`;
+
+    // sendMail(email, receiver_email, email_subject, email_body);
+
+    // return res.status(200).json({
+    //   message: 'Email sent successfully',
+    //   data: req.body
+    // });
 
   } catch (err) {
     return res.status(400).json({ errors: err.array() });
