@@ -7,26 +7,13 @@ const inlineCSS = require('inline-css');
 const nodemailer = require("nodemailer");
 const cors = require('cors');
 
-const corsOpts = {
-  origin: '*',
-
-  methods: [
-    'GET',
-    'POST',
-  ],
-
-  allowedHeaders: [
-    'Content-Type',
-  ],
-};
-
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors(corsOpts));
+app.use(cors());
 const httpServer = createServer(app);
 
-app.route("/").get((req, res) => {
+app.route("/", cors()).get((req, res) => {
   res.json("Hey there welcome to Nehpets Backend")
 });
 
@@ -57,7 +44,7 @@ const sendMail = (sender_email, receiver_email,
   main().catch(console.error);
 }
 
-app.post('/form', oneOf([
+app.post('/form', cors(), oneOf([
   [
     check('firstName').exists(),
     check('lastName').exists(),
@@ -147,7 +134,7 @@ app.post('/form', oneOf([
   }
 });
 
-app.post('/book', oneOf([
+app.post('/book', cors(), oneOf([
   [
     check('firstName').exists(),
     check('lastName').exists(),
@@ -208,7 +195,7 @@ app.post('/book', oneOf([
   }
 });
 
-app.post('/pay', oneOf([
+app.post('/pay', cors(), oneOf([
   [
     check('amount').exists(),
     check('email').exists(),
