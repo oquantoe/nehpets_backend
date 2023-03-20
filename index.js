@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const { createServer } = require("http");
 const { check, oneOf, validationResult } = require('express-validator');
-const Paystack = require('paystack')('sk_test_5001f1f18257a2b086d9b96a32acecb0a4e93356');
+const Paystack = require('paystack')('sk_live_00b34bbf0e00933b48ea65013a920f9024323585');
 const inlineCSS = require('inline-css');
 const nodemailer = require("nodemailer");
 const cors = require('cors');
@@ -86,7 +86,7 @@ app.post('/form', cors(), oneOf([
       email,
     } = req.body;
 
-    const receiver_email = 'nickacad26@gmail.com, sahodu06@gmail.com'
+    const receiver_email = 'sahodu06@gmail.com'
     const email_subject = 'Sent from Nehpets Booking Form';
 
     const email_body = `<div>
@@ -160,7 +160,7 @@ app.post('/book', cors(), oneOf([
       examinationLocation,
     } = req.body;
 
-    const receiver_email = 'nickacad26@gmail.com, sahodu06@gmail.com'
+    const receiver_email = 'sahodu06@gmail.com'
     const email_subject = 'Sent from Nehpets Booking Form';
 
     const email_body = `<div>
